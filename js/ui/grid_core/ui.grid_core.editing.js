@@ -1847,11 +1847,11 @@ const EditingController = modules.ViewController.inherit((function() {
                 that._updateEditRow(options.row, true, isCustomSetCellValue);
                 return;
             }
-
-            that._addEditData(params, options.row);
+            const editDataIndex = that._addEditData(params, options.row);
+            const editData = that._editData[editDataIndex];
             that._updateEditButtons();
 
-            if(editMode === EDIT_MODE_CELL && (isCustomSetCellValue || isCustomCalculateCellValue)) {
+            if(editMode === EDIT_MODE_CELL && !editData.isValid && (isCustomSetCellValue || isCustomCalculateCellValue)) {
                 forceUpdateRow = focusCellAfterRowUpdate = true;
             }
 
