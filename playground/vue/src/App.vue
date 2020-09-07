@@ -1,28 +1,58 @@
 <template>
   <div id="app">
-      <Button
-        text="Click Me!"
-        @click="click"
-        icon="download"
+      <LightGrid
+        key-expr="id"
+        :columns="columns"
+        :data-source="dataSource"
       >
-      </Button>
+      </LightGrid>
   </div>
 </template>
 
 <script>
 
-import Button from "./artifacts/vue/renovation/ui/button";
+import LightGrid from "./artifacts/vue/renovation/ui/light_grid/light_grid";
+
+
+let s = 123456789;
+const random = function() {
+  s = (1103515245 * s + 12345) % 2147483647;
+  return s % (10 - 1);
+};
+
+const generateData = function(count) {
+  var i;
+  var surnames = ['Smith', 'Johnson', 'Brown', 'Taylor', 'Anderson', 'Harris', 'Clark', 'Allen', 'Scott', 'Carter'];
+  var names = ['James', 'John', 'Robert', 'Christopher', 'George', 'Mary', 'Nancy', 'Sandra', 'Michelle', 'Betty'];
+  var gender = ['Male', 'Female'];
+  var items = [];
+
+  for (i = 0; i < count; i++) {
+
+    var nameIndex = random();
+    var item = {
+      id: i + 1,
+      firstName: names[nameIndex],
+      lastName: surnames[random()],
+      gender: gender[Math.floor(nameIndex / 5)]
+    };
+    items.push(item);
+  }
+  return items;
+};
 
 export default {
   name: 'App',
   components: {
-      Button
+      LightGrid
   },
-
+  data() {
+    return {
+      columns: ['id', 'firstName', 'lastName', 'gender', 'id', 'firstName', 'lastName', 'gender', 'id', 'firstName', 'lastName', 'gender'],
+      dataSource: generateData(100000)
+    }
+  },
   methods: {
-      click(){
-          alert("Clicked")
-      }
   }
 }
 </script>

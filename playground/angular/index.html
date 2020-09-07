@@ -21,6 +21,29 @@
         System.import('app').catch(console.error.bind(console));
     </script>
 
+<style>
+    .my-grid {
+    overflow: auto;
+    }
+
+    .my-grid table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    }
+    .my-grid th, .my-grid td {
+    padding: 7px;
+    border: 1px solid #888;
+    background-color: white;
+    }
+
+    .my-grid th {
+    position: sticky;
+    top: 0;
+    }
+  </style>
+
 </head>
 
 <body class="dx-viewport">

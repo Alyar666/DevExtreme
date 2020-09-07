@@ -6,4 +6,5 @@ module.exports = [
     { name: 'TooltipItemLayout', pathInRenovationFolder: 'ui/scheduler/appointment-tooltip/item-layout.j' },
     // { name: 'DataGrid', pathInRenovationFolder: 'ui/data_grid/data_grid.j' },
     { name: 'Pager', pathInRenovationFolder: 'ui/pager/pager.j' },
+    { name: 'DataGrid', pathInRenovationFolder: 'ui/light_grid/light_grid.j' }
 ];
