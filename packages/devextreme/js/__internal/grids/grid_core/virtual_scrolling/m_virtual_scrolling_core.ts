@@ -266,6 +266,14 @@ class VirtualScrollController {
     return this._isScrollingBack;
   }
 
+  public setViewportItemIndexByScrollPosition(position) {
+    this._position = position;
+
+    const itemIndex = this.getItemIndexByPosition();
+
+    this.setViewportItemIndex(itemIndex);
+  }
+
   private _setViewportPositionCore(position) {
     const prevPosition = this._position || 0;
     this._position = position;

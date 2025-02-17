@@ -462,6 +462,32 @@ export const data = (Base: ModuleType<DataController>) => class VirtualScrolling
 
   private _itemCount: any;
 
+  protected changePaging(optionName, value) {
+    if (value !== undefined && (isVirtualMode(this) || isAppendMode(this))) {
+      let scrollPosition = 0;
+      const pageSize = this._dataSource.pageSize() ?? 0;
+      const itemSize = this
+        .getItemSize();
+      const itemSizes = this
+        .getItemSizes();
+      const pageIndex = optionName === 'pageIndex' ? value : 0;
+      const itemIndex = pageIndex * pageSize;
+
+      scrollPosition = itemIndex * itemSize;
+
+      for (const index in itemSizes) {
+        // eslint-disable-next-line radix
+        if (parseInt(index) < itemIndex) {
+          scrollPosition += itemSizes[index] - itemSize;
+        }
+      }
+
+      this._rowsScrollController?.setViewportItemIndexByScrollPosition(scrollPosition);
+    }
+
+    return super.changePaging(optionName, value);
+  }
+
   public dispose() {
     const rowsScrollController = this._rowsScrollController;
 

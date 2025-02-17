@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DevExtreme jQuery Example</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript">
+        const currentThemeId = localStorage.getItem("currentThemeId") || "light";
+
+        const link = document.createElement("link");
+        link.href = `../artifacts/css/dx.${currentThemeId}.css`;
+        link.type = "text/css";
+        link.rel = "stylesheet";
+
+        document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+
+    <script type="text/javascript" src="../artifacts/js/jquery.js"></script>
+    <!-- HtmlEditor -->
+    <!-- <script type="text/javascript" src="../artifacts/js/dx-quill.min.js"></script> -->
+
+    <!--<script type="text/javascript" src="../artifacts/js/cldr.js"></script>
+    <script type="text/javascript" src="../artifacts/js/cldr/event.js"></script>
+    <script type="text/javascript" src="../artifacts/js/cldr/supplemental.js"></script>
+    <script type="text/javascript" src="../artifacts/js/cldr/unresolved.js"></script>
+    <script type="text/javascript" src="../artifacts/js/globalize.js"></script>
+    <script type="text/javascript" src="../artifacts/js/globalize/message.js"></script>
+    <script type="text/javascript" src="../artifacts/js/globalize/number.js"></script>
+    <script type="text/javascript" src="../artifacts/js/globalize/currency.js"></script>
+    <script type="text/javascript" src="../artifacts/js/globalize/date.js"></script>-->
+
+    <!--
+    <script type="text/javascript" src="../artifacts/js/exceljs.min.js"></script>
+    <script type="text/javascript" src="../artifacts/js/FileSaver.min.js"></script>
+    <script type="text/javascript" src="../artifacts/js/jszip.min.js"></script>
+    <script type="text/javascript" src="../artifacts/js/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="../artifacts/js/jspdf.plugin.autotable.min.js"></script>
+    -->
+
+    <script type="text/javascript" src="../artifacts/js/dx.all.debug.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./themeSelector.js"></script>
+    <script type="text/javascript" src="../../../node_modules/axe-core/axe.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/devextreme-aspnet-data@3.0.0/js/dx.aspnet.data.js"></script>
+</head>
+<body class="dx-surface">
+    <div role="main">
+        <h1 style="position: fixed; left: 0; top: 0; clip: rect(1px, 1px, 1px, 1px);">Test header</h1>
+
+        <select id="theme-selector" style="display: block;">
+        </select>
+        <br />
+        <div id="btn"></div>
+        <div id="gridContainer">
+        <script>
+$(() => {
+  $('#btn').dxButton({
+    text: 'test',
+    onClick() {
+      grid.navigateToRow(10021).then(() => {
+        grid.selectRows([10021], false);
+      });
+    }
+  })
+  
+  var grid = $('#gridContainer').dxDataGrid({
+    dataSource: DevExpress.data.AspNet.createStore({
+      key: 'Id',
+      loadUrl: 'https://js.devexpress.com/Demos/WidgetsGalleryDataService/api/Sales',
+    }),
+    width: 900,
+    height: 300,
+    selection: { mode: 'multiple' },
+		searchPanel: { visible: true },
+    remoteOperations: true,
+    scrolling: {
+      mode: 'virtual',
+      rowRenderingMode: 'virtual',
+    },
+    paging: {
+      pageSize: 20,
+    },
+    headerFilter: {
+      visible: true,
+      search: {
+        enabled: true,
+      },
+    },
+    wordWrapEnabled: true,
+    showBorders: true,
+    columns: [{
+      dataField: 'Id',
+      width: 90,
+    }, {
+      caption: 'Store',
+      dataField: 'StoreName',
+      width: 150,
+    }, {
+      caption: 'Category',
+      dataField: 'ProductCategoryName',
+      width: 120,
+    }, {
+      caption: 'Product',
+      dataField: 'ProductName',
+    }, {
+      caption: 'Date',
+      dataField: 'DateKey',
+      dataType: 'date',
+      format: 'yyyy-MM-dd',
+      width: 110,
+    }, {
+      caption: 'Amount',
+      dataField: 'SalesAmount',
+      format: 'currency',
+      headerFilter: {
+        groupInterval: 1000,
+      },
+      width: 100,
+    }],
+  }).dxDataGrid('instance');
+});
+
+        </script>
+    </div>
+</body>
+</html>
