@@ -29,41 +29,6 @@ import gridCoreUtils from '../m_utils';
 import type { VirtualScrollController } from '../virtual_scrolling/m_virtual_scrolling_core';
 import { DataHelperMixin } from './m_data_helper_mixin';
 
-const changePaging = function (that, optionName, value) {
-  const dataSource = that._dataSource;
-
-  if (dataSource) {
-    if (value !== undefined) {
-      const oldValue = that._getPagingOptionValue(optionName);
-      if (oldValue !== value) {
-        if (optionName === 'pageSize') {
-          dataSource.pageIndex(0);
-        }
-        dataSource[optionName](value);
-
-        that._skipProcessingPagingChange = true;
-        that.option(`paging.${optionName}`, value);
-        that._skipProcessingPagingChange = false;
-        const pageIndex = dataSource.pageIndex();
-        that._isPaging = optionName === 'pageIndex';
-        return dataSource[optionName === 'pageIndex' ? 'load' : 'reload']()
-          .done(() => {
-            that._isPaging = false;
-            that.pageChanged.fire(pageIndex);
-          });
-      }
-      return Deferred().resolve().promise();
-    }
-    return dataSource[optionName]();
-  }
-
-  if (optionName === 'pageIndex' && value !== undefined) {
-    return Deferred().resolve().promise();
-  }
-
-  return 0;
-};
-
 interface HandleDataChangedArguments {
   changeType?: 'refresh' | 'update' | 'loadError';
   isDelayed?: boolean;
@@ -110,7 +75,7 @@ export class DataController extends DataHelperMixin(modules.Controller) {
 
   protected _changes!: any[];
 
-  private readonly _skipProcessingPagingChange: boolean | undefined;
+  private _skipProcessingPagingChange: boolean | undefined;
 
   private _useSortingGroupingFromColumns: boolean | undefined;
 
@@ -1601,15 +1566,51 @@ export class DataController extends DataHelperMixin(modules.Controller) {
     return result;
   }
 
+  protected changePaging(optionName, value) {
+    const dataSource = this._dataSource;
+
+    if (dataSource) {
+      if (value !== undefined) {
+        const oldValue = this._getPagingOptionValue(optionName);
+        if (oldValue !== value) {
+          if (optionName === 'pageSize') {
+            dataSource.pageIndex(0);
+          }
+          dataSource[optionName](value);
+
+          this._skipProcessingPagingChange = true;
+          // @ts-expect-error
+          this.option(`paging.${optionName}`, value);
+          this._skipProcessingPagingChange = false;
+          const pageIndex = dataSource.pageIndex();
+          this._isPaging = optionName === 'pageIndex';
+          return dataSource[optionName === 'pageIndex' ? 'load' : 'reload']()
+            .done(() => {
+              this._isPaging = false;
+              this.pageChanged.fire(pageIndex);
+            });
+        }
+        return Deferred().resolve().promise();
+      }
+      return dataSource[optionName]();
+    }
+
+    if (optionName === 'pageIndex' && value !== undefined) {
+      return Deferred().resolve().promise();
+    }
+
+    return 0;
+  }
+
   /**
    * @extended: virtual_scrolling
    */
   public pageIndex(value?) {
-    return changePaging(this, 'pageIndex', value);
+    return this.changePaging('pageIndex', value);
   }
 
   public pageSize(value?) {
-    return changePaging(this, 'pageSize', value);
+    return this.changePaging('pageSize', value);
   }
 
   private beginCustomLoading(messageText) {
