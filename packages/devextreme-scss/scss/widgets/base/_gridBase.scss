@@ -459,13 +459,8 @@
       & > tr > td {
         vertical-align: top;
 
-        &:first-child,
-        &.dx-first-child {
+        &:first-child {
           border-left: 0;
-        }
-
-        &.dx-last-child {
-          border-right: 0;
         }
 
         &.dx-#{$widget-name}-group-space {
