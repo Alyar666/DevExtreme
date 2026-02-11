@@ -719,25 +719,11 @@ $material-grid-base-group-panel-message-line-height: $material-button-text-line-
       }
     }
 
-    &.dx-header-multi-row:not(.dx-#{$widget-name}-sticky-columns) {
-      .dx-#{$widget-name}-content {
-        .dx-#{$widget-name}-table {
-          .dx-row {
-            &.dx-header-row {
-              > td {
-                border-left: 1px solid;
-                border-left-color: $material-grid-base-border-color;
-
-                &:first-child {
-                  border-left: none;
-                }
-
-                &:last-child {
-                  border-right: none;
-                }
-              }
-            }
-          }
+    &.dx-header-multi-row {
+      .dx-#{$widget-name}-table {
+        .dx-header-row > td {
+          border-left: 1px solid;
+          border-left-color: $material-grid-base-border-color;
         }
       }
     }

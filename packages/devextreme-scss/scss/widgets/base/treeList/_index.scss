@@ -107,11 +107,6 @@ $treelist-row-error-color: $datagrid-row-error-color;
   }
 }
 
-.dx-header-multi-row.dx-treelist-sticky-columns .dx-column-lines > td:first-child {
-  border-left: $treelist-border;
-  border-left-color: $treelist-border-color;
-}
-
 .dx-treelist-container {
   color: $treelist-base-color;
 
@@ -351,14 +346,6 @@ $treelist-row-error-color: $datagrid-row-error-color;
           }
         }
       }
-    }
-  }
-
-  .dx-header-multi-row.dx-treelist-sticky-columns {
-    .dx-column-lines > td:first-child {
-      border-left: none;
-      border-right: $treelist-border;
-      border-right-color: $treelist-border-color;
     }
   }
 
