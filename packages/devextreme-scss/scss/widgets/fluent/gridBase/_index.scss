@@ -744,13 +744,9 @@ $fluent-grid-base-group-panel-message-line-height: $fluent-button-text-line-heig
       }
     }
 
-    &.dx-header-multi-row {
-      .dx-#{$widget-name}-table {
-        .dx-header-row > td {
-          border-left: 1px solid;
-          border-left-color: $fluent-grid-base-border-color;
-        }
-      }
+    &.dx-header-multi-row .dx-header-row:not(.dx-column-lines) > td {
+      border-left: 1px solid;
+      border-left-color: $fluent-grid-base-border-color;
     }
 
     &.dx-#{$widget-name}-sticky-columns {
@@ -1302,6 +1298,12 @@ $fluent-grid-base-group-panel-message-line-height: $fluent-button-text-line-heig
       &.dx-scrollable-scrollbars-alwaysvisible.dx-scrollable-both .dx-scrollable-wrapper .dx-scrollable-container .dx-scrollable-content {
         padding-left: 0;
       }
+    }
+
+    .dx-#{$widget-name}-headers.dx-header-multi-row .dx-header-row:not(.dx-column-lines) > td {
+      border-left: none;
+      border-right: 1px solid;
+      border-right-color: $fluent-grid-base-border-color;
     }
   }
 
